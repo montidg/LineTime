@@ -69,7 +69,6 @@
 
         outputSpaces = outputSpaces.map((event,i) => {
             event.translate = `translate(${event.space[0]*scale.w + scale.x * scale.w},${event.index*scale.h + scale.y*scale.h })`;
-            event.index = i;
             return event;
         })
     }
