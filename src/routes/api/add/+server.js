@@ -1,5 +1,5 @@
 import { getDb } from '$lib/db.js';
-let db = await getDb();
+let db;
 
 let returnSuccess = (data) => {
     return new Response(JSON.stringify({'success': data}));
@@ -7,6 +7,7 @@ let returnSuccess = (data) => {
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
+    db = await getDb();
     const data = await request.json();
 
     if (!data || !data.start || !data.name || !data.end) return returnSuccess('Data not found.');
