@@ -94,7 +94,6 @@
         overflow-x: visible;
         height: 1000px;
         position: relative;
-        z-index: -1;
     }
 
     #ui-wrap {
@@ -106,7 +105,9 @@
         margin-left: 10px;
         padding-top: 10px;
 
-        z-index: 1;
+        position: relative;
+
+        z-index: 10;
     }
 
     #ui-right {

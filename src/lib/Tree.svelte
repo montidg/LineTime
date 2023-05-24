@@ -1,6 +1,4 @@
 <script>
-    // 5 depth, 5 entries
-
     const colors = [
         'rgb(105,118,115)',
         'rgb(235, 95, 80)',
@@ -68,16 +66,13 @@
 
     $: {
         scale.w = w;
-    }
 
-    /*for (let i = 0; i < 1000; i++) {
-        let start = (new Date() * 1) + Math.random() * 3000 * 300000;
-        events.push({
-            "name": "Event " + i,
-            "space": [start, start + Math.random() * 300 * 300000]
+        outputSpaces = outputSpaces.map((event,i) => {
+            event.translate = `translate(${event.space[0]*scale.w + scale.x * scale.w},${event.index*scale.h + scale.y*scale.h })`;
+            event.index = i;
+            return event;
         })
-    }*/
-
+    }
     
     for (let i = 0; i < events.length; i++) {
         events[i].index = allocSpace(events[i]);
@@ -87,27 +82,35 @@
     outputSpaces = events.sort((a,b) => a.space[0] - b.space[0]);
 </script>
 
+<style>
+    text {
+        pointer-events: none;
+    }
+</style>
+
 <!-- todo: clean this up -->
 {#each outputSpaces as event}
-    <g transform='translate({event.space[0]*scale.w + scale.x * scale.w},{event.index*scale.h + scale.y*scale.h })'>
-        <rect 
-            class='event' 
-            width='{Math.max((event.space[1] - event.space[0]) * scale.w,60)}'
-            height='{scale.h * 0.9}'
-            fill='{event.color}'
-            opacity='0.5'
-        ></rect>
-        <rect 
-            class='event' 
-            width='{(event.space[1] - event.space[0]) * scale.w}'
-            height='{scale.h * 0.9}'
-            fill='{event.color}'
-        ></rect>
+    <g transform={event.translate}>
+        <a href='/wiki/{encodeURIComponent(event.name)}'>
+            <rect 
+                class='event' 
+                width='{Math.max((event.space[1] - event.space[0]) * scale.w,60)}'
+                height='{scale.h * 0.9}'
+                fill='{event.color}'
+                opacity='0.5'
+            ></rect>
+            <rect 
+                class='event' 
+                width='{(event.space[1] - event.space[0]) * scale.w}'
+                height='{scale.h * 0.9}'
+                fill='{event.color}'
+            ></rect>
+        </a>
     </g>
 {/each}
 
 {#each outputSpaces as event}
-    <g transform='translate({event.space[0]*scale.w + scale.x * scale.w},{event.index*scale.h + scale.y*scale.h })'>
+    <g transform={event.translate}>
         <text x='0' y={scale.h * 0.45} font-size=8 fill='white' stroke='black' stroke-width='0.5' paint-order="stroke" >{event.name}</text>
         <text x='0' y={scale.h * 0.7} font-size=4 fill='black'>
             {(new Date(event.space[0]) + '').split('GMT')[0]}

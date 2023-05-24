@@ -1,8 +1,5 @@
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch}) {
-    const res = await fetch(`/api/get`).then(x => x.json());
-
-    console.log(res);
-
+export async function load({ params, fetch }) {
+    let res = await fetch(`/api/get`).then(x => x.json());
     return { res };
 }
