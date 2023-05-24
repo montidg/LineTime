@@ -12,6 +12,7 @@
     let vel = [0,0];
     let translate = '';
     let width = 0;
+    let height = 0;
     let center = [0,0];
     let lastPos = [0,0];
     let isMouse = false;
@@ -43,14 +44,14 @@
     }
 
     function wheel(e) {
-        mpos[0] -= lastPos[0];
-        mpos[1] -= lastPos[1];
+        mpos[0] -= lastPos[0] - (width/2);
+        mpos[1] -= lastPos[1] - (height/2);
 
         mpos[0] *= (1.005 ** -e.deltaY)
         mpos[1] *= (1.005 ** -e.deltaY)
 
-        mpos[0] += lastPos[0];
-        mpos[1] += lastPos[1];
+        mpos[0] += lastPos[0] - (width/2);
+        mpos[1] += lastPos[1] - (height/2);
 
         zoom *= (1.005 ** -e.deltaY)
     }
@@ -66,9 +67,11 @@
         mpos[0] += vel[0];
         mpos[1] += vel[1];
 
-        w *= ((keys['r'] ? 2 : 1) * (keys['f'] ? 0.5 : 1)) ** (isShift ? 0.3 : 0.1);
+        let ratio = ((keys['r'] ? 2 : 1) * (keys['f'] ? 0.5 : 1)) ** (isShift ? 0.3 : 0.1);
+        w *= ratio;
+        mpos[0] *= ratio;
 
-        translate = `translate(${mpos[0]},${mpos[1]})`;
+        translate = `translate(${mpos[0] + (width/2)},${mpos[1] + (height/2)})`;
     }
 
     setInterval(move,10);
@@ -130,7 +133,7 @@
     </div>
 </div> 
 
-<div bind:clientWidth={width}>
+<div bind:clientWidth={width} bind:clientHeight={height}>
     <svg id='area-main' bind:this={area}>
         <g transform="{translate}, scale({zoom},{zoom})">
             <Tree events={events} w={w} />
