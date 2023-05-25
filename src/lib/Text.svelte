@@ -1,6 +1,5 @@
 <style>
     .main {
-        border-radius: 10px;
         width: 200px;
         height: 100px;
         border: none;

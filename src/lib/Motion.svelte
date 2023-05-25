@@ -4,6 +4,7 @@
 
     import Tree from '$lib/Tree.svelte';
     import Menu from '$lib/Menu.svelte';
+    import AddMenu from '$lib/AddMenu.svelte';
 
     let area;
     let pos = [];
@@ -19,10 +20,12 @@
     let zoom = 3;
 
     function down(e) {
+        if (e.target.nodeName == 'TEXTAREA') return;
         keys[e.key.toLowerCase()] = true;
     };
 
     function up(e) {
+        if (e.target.nodeName == 'TEXTAREA') return;
         keys[e.key.toLowerCase()] = false;
     };
     
@@ -117,7 +120,7 @@
 
 <div id='ui-wrap'>
     <div>
-        <Menu img='/info.svg'>
+        <Menu img='/info.svg' position=''>
             <p>This experiment aims to document every event to have ever happened ever, regardless of significance.</p>
             <p>Anyone can add a contribution to the timeline automatically with the Plus button.</p>
             <p>Spam, blatant advertising, and questionable content will be removed.</p>
@@ -126,11 +129,9 @@
     </div>
 
     <div id='ui-right'>
-        <a href='/add' target='_blank'>
-            <Menu img='/add.svg'>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-            </Menu>
-        </a>
+        <Menu img='/add.svg'>
+            <AddMenu />
+        </Menu>
     </div>
 </div> 
 
