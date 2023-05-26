@@ -21,7 +21,7 @@
         status = data.success;
 
         if (status == 'next') {
-            window.location.href = '/';
+            status = '';
         }
     }
 
@@ -54,6 +54,11 @@
         "type": "text",
         "key": "End date",
         "name": "end"
+    },
+    {
+        "type": "text",
+        "key": "Categories (comma separated)",
+        "name": "categories"
     }
 ]}
 bind:form={exportSettings}

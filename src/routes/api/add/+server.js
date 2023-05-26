@@ -18,11 +18,29 @@ export async function POST({ request }) {
     if (isNaN(dateEnd) || isNaN(dateStart)) return returnSuccess('Dates are invalid.');
     if (dateEnd <= dateStart) return returnSuccess('Dates are in the incorrect order.')
 
+    let exists = await db.all('SELECT * FROM events WHERE name = ?', [
+        data.name + ''
+    ])
+
+    if (exists && exists.length > 0) return returnSuccess('Event already exists.')
+
     await db.run('INSERT INTO events (name, start, end) VALUES (?, ?, ?)', [
         data.name + '',
         dateStart + '',
         dateEnd + ''
     ])
+
+    if (data.categories) {
+        let categories = (data.categories + '').split(',');
+        
+        for (var i = 0; i < categories.length; i++) {
+            await db.run('INSERT INTO categories (event, category) VALUES (?, ?)', [
+                data.name + '',
+                categories[i]
+            ])
+        }
+
+    }
 
     return returnSuccess('next');
 };

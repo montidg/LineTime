@@ -10,6 +10,7 @@ let getDb = async () => {
             driver: sqlite3.Database
         });
         await db.run('CREATE TABLE IF NOT EXISTS events (name TEXT, desc TEXT, start TEXT, end TEXT)')
+        await db.run('CREATE TABLE IF NOT EXISTS categories (event TEXT, category TEXT)')
     } 
     return db;
 };
