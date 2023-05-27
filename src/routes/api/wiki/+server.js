@@ -10,11 +10,11 @@ export async function GET({ url }) {
         input
     ]) || {};
 
-    let cat = (await db.all('SELECT event FROM categories WHERE event = ?', [
+    let cat = (await db.all('SELECT category FROM categories WHERE event = ?', [
         input
     ]) || [])
 
-    data.categories = cat.map(s => s.event).join(',');
+    data.categories = cat.map(s => s.category).join(',');
    
     return new Response(JSON.stringify(data));
 };
