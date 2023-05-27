@@ -47,6 +47,7 @@
     }
 
     function wheel(e) {
+        if (e.target.nodeName == 'DIV' || e.target.nodeName == 'TEXTAREA') return;
         mpos[0] -= lastPos[0] - (width/2);
         mpos[1] -= lastPos[1] - (height/2);
 

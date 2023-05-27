@@ -20,6 +20,9 @@
         background: var(--light-2);
         border: var(--dark-2) solid 5px;
         z-index: -1;
+
+        max-height: 70vh;
+        overflow-y: auto;
     }
 
     .menu.right {
