@@ -13,7 +13,7 @@ export async function GET({ url }) {
 
     if (categoryList.length != 0 && categoryList[0] != '' && categoryList[0] != 'null'  && categoryList[0] != 'undefined') {
         for (let i = 0; i < categoryList.length; i++) {
-            let elems = await db.all('SELECT * FROM events WHERE name IN (SELECT event FROM categories WHERE category = ?)', [
+            let elems = await db.all('SELECT name, start, end FROM events WHERE name IN (SELECT event FROM categories WHERE category = ?)', [
                 categoryList[i]
             ])
             data = [...data, ...elems];

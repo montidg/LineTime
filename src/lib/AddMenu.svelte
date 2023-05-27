@@ -59,6 +59,11 @@
         "type": "text",
         "key": "Categories (comma separated)",
         "name": "categories"
+    },
+    {
+        "type": "text",
+        "key": "Description",
+        "name": "desc"
     }
 ]}
 bind:form={exportSettings}

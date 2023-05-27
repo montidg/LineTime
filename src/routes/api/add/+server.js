@@ -10,7 +10,7 @@ export async function POST({ request }) {
     db = await getDb();
     const data = await request.json();
 
-    if (!data || !data.start || !data.name || !data.end) return returnSuccess('Data not found.');
+    if (!data || !data.start || !data.name || !data.end || !data.desc) return returnSuccess('Data not found.');
 
     let dateStart = new Date(data.start) * 1;
     let dateEnd = new Date(data.end) * 1;
@@ -24,10 +24,11 @@ export async function POST({ request }) {
 
     if (exists && exists.length > 0) return returnSuccess('Event already exists.')
 
-    await db.run('INSERT INTO events (name, start, end) VALUES (?, ?, ?)', [
+    await db.run('INSERT INTO events (name, start, end, desc) VALUES (?, ?, ?, ?)', [
         data.name + '',
         dateStart + '',
-        dateEnd + ''
+        dateEnd + '',
+        data.desc + ''
     ])
 
     if (data.categories) {
