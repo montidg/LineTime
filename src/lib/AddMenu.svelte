@@ -41,22 +41,22 @@
 
 <Form data={[
     {
-        "type": "text",
+        "type": "line",
         "key": "Title",
         "name": "name"
     },
     {
-        "type": "text",
+        "type": "line",
         "key": "Start date",
         "name": "start"
     },
     {
-        "type": "text",
+        "type": "line",
         "key": "End date",
         "name": "end"
     },
     {
-        "type": "text",
+        "type": "line",
         "key": "Categories (comma separated)",
         "name": "categories"
     },

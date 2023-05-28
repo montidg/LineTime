@@ -1,6 +1,7 @@
 <script>
     import Slider from './Slider.svelte';
     import Text from './Text.svelte';
+    import LineInput from './LineInput.svelte';
 
     export let data = [
         {
@@ -55,6 +56,8 @@
                 <Slider bind:form={form[slider.name]}></Slider>
             {:else if slider.type == 'text'}
                 <Text bind:form={form[slider.name]}></Text>
+            {:else if slider.type == 'line'}
+                <LineInput bind:form={form[slider.name]}></LineInput>
             {/if}
         </div>
     {/each}

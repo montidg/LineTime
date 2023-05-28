@@ -20,12 +20,12 @@
     let zoom = 3;
 
     function down(e) {
-        if (e.target.nodeName == 'TEXTAREA') return;
+        if (e.target.nodeName == 'TEXTAREA' || e.target.nodeName == 'INPUT') return;
         keys[e.key.toLowerCase()] = true;
     };
 
     function up(e) {
-        if (e.target.nodeName == 'TEXTAREA') return;
+        if (e.target.nodeName == 'TEXTAREA' || e.target.nodeName == 'INPUT') return;
         keys[e.key.toLowerCase()] = false;
     };
     
@@ -47,7 +47,7 @@
     }
 
     function wheel(e) {
-        if (e.target.nodeName == 'DIV' || e.target.nodeName == 'TEXTAREA') return;
+        if (e.target.nodeName == 'DIV' || e.target.nodeName == 'TEXTAREA' || e.target.nodeName == 'INPUT') return;
         mpos[0] -= lastPos[0] - (width/2);
         mpos[1] -= lastPos[1] - (height/2);
 
