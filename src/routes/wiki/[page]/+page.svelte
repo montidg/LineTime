@@ -18,7 +18,7 @@
     let start = new Date(data.res.start * 1);
     let end = new Date(data.res.end * 1);
     let desc = data.res.desc;
-    let categories = data.res.categories;
+    let categories = data.res.categories.split(',');
 </script>
 
 
@@ -31,7 +31,9 @@
         </p>
         <h2>Metadata</h2>
         <p> 
-            <i>Categories: {categories}</i>
+            <i>Categories: {#each categories as category}
+                <a href='/category/{category}'>{category}</a> 
+            {/each}</i>
         </p>
         <p>
             <i>Start: {start}</i>
