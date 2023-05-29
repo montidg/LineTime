@@ -11,6 +11,8 @@ let getDb = async () => {
         });
         await db.run('CREATE TABLE IF NOT EXISTS events (name TEXT, desc TEXT, start TEXT, end TEXT)')
         await db.run('CREATE TABLE IF NOT EXISTS categories (event TEXT, category TEXT)')
+        await db.run('CREATE TABLE IF NOT EXISTS auth (username TEXT, password TEXT)')
+        await db.run('CREATE TABLE IF NOT EXISTS token (username TEXT, token TEXT)')
     } 
     return db;
 };

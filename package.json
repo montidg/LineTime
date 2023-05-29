@@ -16,6 +16,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-node": "^1.2.4",
+		"bcrypt": "^5.1.0",
 		"sqlite": "^4.2.1",
 		"sqlite3": "^5.1.6"
 	}
