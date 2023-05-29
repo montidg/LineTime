@@ -93,13 +93,6 @@
         <a href='/wiki/{encodeURIComponent(event.name)}'>
             <rect 
                 class='event' 
-                width='{Math.max((event.space[1] - event.space[0]) * scale.w,60)}'
-                height='{scale.h * 0.9}'
-                fill='{event.color}'
-                opacity='0.5'
-            ></rect>
-            <rect 
-                class='event' 
                 width='{(event.space[1] - event.space[0]) * scale.w}'
                 height='{scale.h * 0.9}'
                 fill='{event.color}'
