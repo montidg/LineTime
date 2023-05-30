@@ -1,8 +1,4 @@
 <script>
-    import Slider from './Slider.svelte';
-    import Text from './Text.svelte';
-    import LineInput from './LineInput.svelte';
-
     export let data = [
         {
             "type": "slider",
@@ -11,6 +7,32 @@
         }
     ];
     export let form = {};
+    export let route = '/';
+
+    import Slider from './Slider.svelte';
+    import Text from './Text.svelte';
+    import LineInput from './LineInput.svelte';
+
+    $: if (form.submit === true) { 
+        form.submit = -1;
+        main();
+    }
+
+    let status = 'Nothing submitted';
+
+    async function main() {
+        let data = await fetch(route, {
+            "method": "POST",
+            "body": JSON.stringify(form)
+        }).then(x => x.json());
+
+        status = data.success;
+
+        if (status == 'next') {
+            status = '';
+        }
+    }
+
 
     $: if (data[data.length - 1].name != 'submit') {
         data.push(
@@ -26,7 +48,9 @@
         setTimeout(() => form.submit = false, 300);
     }
     
+
 </script>
+
 <style>
     .form {
         display: grid;
@@ -47,6 +71,10 @@
         margin: 15px;
     }
 </style>
+
+<p>
+    {status}
+</p>
 
 <div class='form'>
     {#each data as slider}

@@ -11,7 +11,7 @@
 </style>
 
 <script>
-    export let form = 'No value specified';
+    export let form = '';
 </script>
 
 <input type='text' class='main' bind:value={form}>

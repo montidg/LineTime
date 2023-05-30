@@ -9,7 +9,7 @@
 </style>
 
 <script>
-    export let form = 'No value specified';
+    export let form = '';
 </script>
 
 <textarea class='main' bind:value={form}></textarea>
