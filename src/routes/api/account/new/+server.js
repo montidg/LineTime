@@ -1,10 +1,6 @@
-import { getDb } from '$lib/db.js';
+import { getDb, returnSuccess } from '$lib/db.js';
 import { hash } from 'bcrypt'
 let db;
-
-let returnSuccess = (data) => {
-    return new Response(JSON.stringify({'success': data}));
-}
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {

@@ -17,6 +17,11 @@ let getDb = async () => {
     return db;
 };
 
+let returnSuccess = (data) => {
+    return new Response(JSON.stringify({'success': data}));
+}
+
 export {
-    getDb
+    getDb,
+    returnSuccess
 };

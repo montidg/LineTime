@@ -1,11 +1,7 @@
-import { getDb } from '$lib/db.js';
+import { getDb, returnSuccess } from '$lib/db.js';
 import { compare } from 'bcrypt'
 import { randomBytes } from 'node:crypto';
 let db;
-
-let returnSuccess = (data) => {
-    return new Response(JSON.stringify({'success': data}));
-}
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies }) {
@@ -42,5 +38,5 @@ export async function POST({ request, cookies }) {
         });
     };
 
-    return returnSuccess('Successfully loggedin .');
+    return returnSuccess('Successfully logged in.');
 };
