@@ -1,6 +1,25 @@
 import { getDb, returnSuccess } from '$lib/db.js';
 let db;
 
+let toDate = (date) => {
+    const bcRegex = /([^\s]+)\sBC/i;
+    
+    let matches = date.match(bcRegex);
+
+    if (matches && matches.length > 0) {
+        let dateAlt = date.replace(bcRegex,'2020');
+        let outDate = new Date(dateAlt);
+
+        outDate.setFullYear(matches[1] * -1);
+
+        return outDate * 1;
+    }
+
+    console.log(date)
+
+    return new Date(date) * 1;
+}
+
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
     db = await getDb();
@@ -8,8 +27,8 @@ export async function POST({ request }) {
 
     if (!data || !data.start || !data.name || !data.end || !data.desc) return returnSuccess('Data not found.');
 
-    let dateStart = new Date(data.start) * 1;
-    let dateEnd = new Date(data.end) * 1;
+    let dateStart = toDate(data.start);
+    let dateEnd = toDate(data.end);
 
     if (isNaN(dateEnd) || isNaN(dateStart)) return returnSuccess('Dates are invalid.');
     if (dateEnd <= dateStart) return returnSuccess('Dates are in the incorrect order.')
