@@ -27,6 +27,8 @@ export async function POST({ request }) {
 
     if (!data || !data.start || !data.name || !data.end || !data.desc) return returnSuccess('Data not found.');
 
+    if (data.name.length > 64) return returnSuccess('Name too long. Maximum is 64 characters.');
+
     let dateStart = toDate(data.start);
     let dateEnd = toDate(data.end);
 
