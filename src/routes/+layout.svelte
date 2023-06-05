@@ -22,5 +22,13 @@
     }
 </style>
 
+<script>
+    import Meta from '$lib/Meta.svelte';
+</script>
+
+<svelte:head>
+	<Meta />
+</svelte:head>
+
 
 <slot />
