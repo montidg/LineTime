@@ -19,6 +19,7 @@
     let end = new Date(data.res.end * 1);
     let desc = data.res.desc;
     let categories = data.res.categories.split(',');
+    let username = data.res.user;
 </script>
 
 
@@ -34,6 +35,9 @@
             <i>Categories: {#each categories as category}
                 <a href='/category/{category}'>{category}</a> 
             {/each}</i>
+        </p>
+        <p>
+            <i>Created by {username}</i>
         </p>
         <p>
             <i>Start: {start}</i>

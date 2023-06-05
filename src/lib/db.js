@@ -9,7 +9,7 @@ let getDb = async () => {
             filename: `${process.cwd()}/db/main.db`,
             driver: sqlite3.Database
         });
-        await db.run('CREATE TABLE IF NOT EXISTS events (name TEXT, desc TEXT, start TEXT, end TEXT)')
+        await db.run('CREATE TABLE IF NOT EXISTS events (name TEXT, desc TEXT, start TEXT, end TEXT, user TEXT)')
         await db.run('CREATE TABLE IF NOT EXISTS categories (event TEXT, category TEXT)')
         await db.run('CREATE TABLE IF NOT EXISTS auth (username TEXT, password TEXT)')
         await db.run('CREATE TABLE IF NOT EXISTS token (username TEXT, token TEXT)')
@@ -20,6 +20,7 @@ let getDb = async () => {
 let returnSuccess = (data) => {
     return new Response(JSON.stringify({'success': data}));
 }
+
 
 export {
     getDb,

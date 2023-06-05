@@ -21,9 +21,10 @@ let toDate = (date) => {
 }
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+export async function POST({ request, cookies, fetch }) {
     db = await getDb();
     const data = await request.json();
+    const token = cookies.get('token');
 
     if (!data || !data.start || !data.name || !data.end || !data.desc) return returnSuccess('Data not found.');
 
@@ -41,11 +42,29 @@ export async function POST({ request }) {
 
     if (exists && exists.length > 0) return returnSuccess('Event already exists.')
 
-    await db.run('INSERT INTO events (name, start, end, desc) VALUES (?, ?, ?, ?)', [
+    let username;
+    if (!token) {
+        username = '???'
+    } else {
+        username = await fetch('https://auth.montidg.net/api/account/token/', {
+            'method': 'POST',
+            'headers': {
+                "Content-Type": "application/json",
+            },
+            'body': JSON.stringify({
+                token: token,
+                scope: 'linetime'
+            })
+        }).then(x => x.json());
+        username = username.data[0].username;
+    }
+
+    await db.run('INSERT INTO events (name, start, end, desc, user) VALUES (?, ?, ?, ?, ?)', [
         data.name + '',
         dateStart + '',
         dateEnd + '',
-        data.desc + ''
+        data.desc + '',
+        username + ''
     ])
 
     if (data.categories) {

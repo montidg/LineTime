@@ -127,6 +127,11 @@
             <p>Spam, blatant advertising, and questionable content will be removed.</p>
             <p>WASD or mouse to pan timeline, Q to speed up, and R/F/mouse wheel to zoom.</p>
         </Menu>
+        <a href='https://auth.montidg.net/account/auth?scope=linetime&next=https://line.montidg.net/auth'>
+            <Menu img='/log.svg' position=''>
+                N/A
+            </Menu>
+        </a>
     </div>
 
     <div id='ui-right'>

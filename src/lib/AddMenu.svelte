@@ -1,6 +1,9 @@
 <script>
     import Form from '$lib/Form.svelte';
+
 </script>
+
+<p>If logged in, your username will be sent.</p>
 
 <Form 
     data={[
