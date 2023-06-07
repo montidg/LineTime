@@ -1,4 +1,4 @@
-import { getDb, returnSuccess } from '$lib/db.js';
+import { getDb, returnSuccess, getToken } from '$lib/db.js';
 let db;
 
 let toDate = (date) => {
@@ -24,7 +24,6 @@ let toDate = (date) => {
 export async function POST({ request, cookies, fetch }) {
     db = await getDb();
     const data = await request.json();
-    const token = cookies.get('token');
 
     if (!data || !data.start || !data.name || !data.end || !data.desc) return returnSuccess('Data not found.');
 
@@ -40,32 +39,29 @@ export async function POST({ request, cookies, fetch }) {
         data.name + ''
     ])
 
-    if (exists && exists.length > 0) return returnSuccess('Event already exists.')
+    let username = await getToken(cookies, fetch);
 
-    let username;
-    if (!token) {
-        username = '???'
+    if (exists && exists.length > 0) {
+        if (exists[0].user !== username) return returnSuccess('You don\'t own this event.')
+    } 
+
+    if (exists && exists[0] && exists[0].user === username && exists[0].user !== '???') {
+        await db.run('UPDATE events SET start = ?, end = ?, desc = ?, user = ? WHERE name = ?', [
+            dateStart + '',
+            dateEnd + '',
+            data.desc + '',
+            username + '',
+            data.name + ''
+        ])
     } else {
-        username = await fetch('https://auth.montidg.net/api/account/token/', {
-            'method': 'POST',
-            'headers': {
-                "Content-Type": "application/json",
-            },
-            'body': JSON.stringify({
-                token: token,
-                scope: 'linetime'
-            })
-        }).then(x => x.json());
-        username = username.data[0].username;
+        await db.run('INSERT INTO events (name, start, end, desc, user) VALUES (?, ?, ?, ?, ?)', [
+            data.name + '',
+            dateStart + '',
+            dateEnd + '',
+            data.desc + '',
+            username + ''
+        ])
     }
-
-    await db.run('INSERT INTO events (name, start, end, desc, user) VALUES (?, ?, ?, ?, ?)', [
-        data.name + '',
-        dateStart + '',
-        dateEnd + '',
-        data.desc + '',
-        username + ''
-    ])
 
     if (data.categories) {
         let categories = (data.categories + '').split(',');
